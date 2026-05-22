@@ -1,3 +1,4 @@
+//Andrew Mai
 //Link statically with GLEW
 #define GLEW_STATIC
 
@@ -79,6 +80,7 @@ int main(int argc, char * argv[]) {
     glGenBuffers(1, &vbo);
 
     GLfloat vertices[] = {
+        //    coordinates      colors          texcoords
         //X      Y      Z     R     G     B     U     V
         -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
          0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
@@ -183,20 +185,19 @@ int main(int argc, char * argv[]) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Calculate transformation
-        /*
+        
+        //for animation  
         auto t_now = std::chrono::high_resolution_clock::now();
         float time = std::chrono::duration_cast<std::chrono::duration<float>>(t_now - t_start).count();
-        */
+        
 
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(
-            model,
-           glm::radians(180.0f),
-            glm::vec3(0.0f, 0.0f, 1.0f)
-        );
+        glm::mat4 model = glm::mat4(1.0f); 
+        model = glm::rotate(model, time * glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 0.0f)); //rotate cube
+      
+           
 
-        model = glm::scale(model, glm::vec3(0.5, 1.0, 0.5));
-        model = glm::translate(model, glm::vec3(1, 1, 1));
+        model = glm::scale(model, glm::vec3(0.5, 1.0, 0.5)); //scale cube
+        model = glm::translate(model, glm::vec3(1, 1, 1)); //translate cube
 
         glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
